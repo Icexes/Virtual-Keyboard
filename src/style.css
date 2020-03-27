@@ -1,0 +1,51 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+.input-field {
+    min-width:700px;
+    height:200px;
+    display:block;
+    margin:0 auto;
+    resize:none;
+    border-radius: 2%;
+}
+
+.keyboard {
+    display:flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 10px auto;
+    max-width:850px;
+    height:310px;
+    padding:5px;
+    border: 1px solid rgb(161, 82, 82);
+    border-radius: 2%;
+    background-color: rgb(82, 90, 88);
+}
+
+.key {
+    margin: 3px;
+    padding:5px;
+    background:rgb(24, 25, 26);
+    border-radius: 5px;
+    color:#fff;
+    font-size:17px;
+    font-weight:bold;
+    width:40px;
+    height:40px;
+    text-align:center;
+    line-height: 40px;
+    user-select: none;
+}
+
+.special-key {
+    min-width: 80px;
+}
+.space {
+    min-width:310px;
+}
+
+.key:hover {
+    background-color:rgb(38, 127, 143);
+    cursor:pointer;
+}
