@@ -14,7 +14,7 @@ body {
     display:flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin: 10px auto;
+    margin: 30px auto;
     max-width:850px;
     height:310px;
     padding:5px;
@@ -48,4 +48,7 @@ body {
 .key:hover {
     background-color:rgb(38, 127, 143);
     cursor:pointer;
+}
+.key--active {
+    background-color:rgb(38, 127, 143);
 }
