@@ -113,9 +113,9 @@ document.addEventListener('keydown', (event) => {
         keyboard.querySelector("div[code='CapsLock']").classList.add('key--active');
 
         if (isShiftClicked) {
-          lang == 'eng' ? changeKeys(engShiftKeys) : changeKeys(ruShiftKeys); // ??????????????????????????????????
+          changeKeys(lang === 'eng' ? engShiftKeys : ruShiftKeys); // ??????????????????????????????????
         } else {
-          lang == 'eng' ? changeKeys(engCapsKeys) : changeKeys(ruCapsKeys);
+          changeKeys(lang === 'eng' ? engCapsKeys : ruCapsKeys);
         }
       } else {
         keyboard.querySelector("div[code='CapsLock']").classList.remove('key--active');
@@ -142,6 +142,9 @@ document.addEventListener('keydown', (event) => {
       break;
     case 'Enter':
       inputField.setRangeText('\n', inputField.selectionStart, inputField.selectionEnd, 'end');
+      break;
+    case 'Tab':
+      inputField.setRangeText('  ', inputField.selectionStart, inputField.selectionEnd, 'end');
       break;
     default:
   }
