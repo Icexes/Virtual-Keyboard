@@ -180,7 +180,13 @@ function eventHandler(event, type) {
       lang = lang === 'eng' ? 'ru' : 'eng';
       changeLangState(lang);
       if (isCapsLockClicked) {
-        changeKeys(lang === 'eng' ? engCapsKeys : ruCapsKeys);
+        if (isShiftClicked) {
+          changeKeys(lang === 'eng' ? engShiftCapsKeys : ruShiftCapsKeys);
+        } else {
+          changeKeys(lang === 'eng' ? engCapsKeys : ruCapsKeys);
+        }
+      } else if (isShiftClicked) {
+        changeKeys(lang === 'eng' ? engShiftKeys : ruShiftKeys);
       } else {
         changeKeys(lang === 'eng' ? engKeys : ruKeys);
       }
