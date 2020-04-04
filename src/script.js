@@ -80,26 +80,28 @@ let lang = localStorage.getItem('lang') ? localStorage.getItem('lang') : 'eng';
 let isShiftClicked = false;
 let isCapsLockClicked = false;
 
-const body = document.querySelector('body');
-const inputField = document.createElement('textarea', 'input-field');
-inputField.classList.add('input-field');
-const keyboard = document.createElement('div');
-keyboard.classList.add('keyboard');
-const systemDescription = document.createElement('p');
-systemDescription.classList.add('system-description');
-systemDescription.textContent = 'Клавиатура создана в операционной системе Windows';
-const languageDescription = document.createElement('p');
-languageDescription.classList.add('language-description');
-languageDescription.textContent = 'Для переключения языка используйте комбинацию левыe ctrl + alt';
-body.append(inputField);
-body.append(keyboard);
-body.append(systemDescription);
-body.append(languageDescription);
-
-
 const changeLangState = (language) => localStorage.setItem('lang', language);
 
+const createDOM = () => {
+  const body = document.querySelector('body');
+  const inputField = document.createElement('textarea', 'input-field');
+  inputField.classList.add('input-field');
+  const keyboard = document.createElement('div');
+  keyboard.classList.add('keyboard');
+  const systemDescription = document.createElement('p');
+  systemDescription.classList.add('system-description');
+  systemDescription.textContent = 'Клавиатура создана в операционной системе Windows';
+  const languageDescription = document.createElement('p');
+  languageDescription.classList.add('language-description');
+  languageDescription.textContent = 'Для переключения языка используйте комбинацию левыe ctrl + alt';
+  body.append(inputField);
+  body.append(keyboard);
+  body.append(systemDescription);
+  body.append(languageDescription);
+};
+
 const addKeys = (keys) => {
+  const keyboard = document.querySelector('.keyboard');
   keys.forEach((keyValue, index) => {
     const key = document.createElement('div');
     key.classList.add('keyboard__key');
@@ -113,13 +115,16 @@ const addKeys = (keys) => {
 };
 
 const changeKeys = (keyValues) => {
+  const keyboard = document.querySelector('.keyboard');
   const keys = keyboard.querySelectorAll('.keyboard__key');
   for (let i = 0; i < keys.length; i += 1) {
     keys[i].textContent = keyValues[i];
   }
 };
 
-function eventHandler(event, type) {
+const eventHandler = (event, type) => {
+  const keyboard = document.querySelector('.keyboard');
+  const inputField = document.querySelector('.input-field');
   inputField.focus();
   event.preventDefault();
   const keys = document.querySelectorAll('.keyboard__key');
@@ -229,25 +234,30 @@ function eventHandler(event, type) {
       default:
     }
   }
-}
+};
 
-document.addEventListener('keydown', (event) => {
-  eventHandler(event, 'keydown');
-});
-
-
-document.addEventListener('keyup', (event) => {
-  eventHandler(event, 'keyup');
-});
+const addListeners = () => {
+  const keyboard = document.querySelector('.keyboard');
+  document.addEventListener('keydown', (event) => {
+    eventHandler(event, 'keydown');
+  });
 
 
-keyboard.addEventListener('mousedown', (event) => {
-  eventHandler(event, 'mousedown');
-});
+  document.addEventListener('keyup', (event) => {
+    eventHandler(event, 'keyup');
+  });
 
 
-keyboard.addEventListener('mouseup', (event) => {
-  eventHandler(event, 'mouseup');
-});
+  keyboard.addEventListener('mousedown', (event) => {
+    eventHandler(event, 'mousedown');
+  });
 
+
+  keyboard.addEventListener('mouseup', (event) => {
+    eventHandler(event, 'mouseup');
+  });
+};
+
+createDOM();
 addKeys(lang === 'eng' ? engKeys : ruKeys);
+addListeners();
