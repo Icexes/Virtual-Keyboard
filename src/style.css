@@ -5,7 +5,7 @@ body {
     min-width:700px;
     height:200px;
     display:block;
-    margin:0 auto;
+    margin:0 auto;      
     resize:none;
     border-radius: 2%;
 }
@@ -30,7 +30,6 @@ body {
     border-radius: 5px;
     color:#fff;
     font-size:17px;
-    font-weight:bold;
     width:42px;
     height:40px;
     text-align:center;
@@ -44,6 +43,7 @@ body {
 .key-special {
     min-width: 100px;
 }
+
 .space {
     min-width:400px;
 }
@@ -60,4 +60,9 @@ body {
      top: 2px;
     left: 2px; 
     transition:  0.3s;
+}
+
+.system-description,
+.language-description {
+    text-align: center;
 }

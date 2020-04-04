@@ -85,8 +85,16 @@ const inputField = document.createElement('textarea', 'input-field');
 inputField.classList.add('input-field');
 const keyboard = document.createElement('div');
 keyboard.classList.add('keyboard');
+const systemDescription = document.createElement('p');
+systemDescription.classList.add('system-description');
+systemDescription.textContent = 'Клавиатура создана в операционной системе Windows';
+const languageDescription = document.createElement('p');
+languageDescription.classList.add('language-description');
+languageDescription.textContent = 'Для переключения языка используйте комбинацию левыe ctrl + alt';
 body.append(inputField);
 body.append(keyboard);
+body.append(systemDescription);
+body.append(languageDescription);
 
 
 const changeLangState = (language) => localStorage.setItem('lang', language);
@@ -241,6 +249,5 @@ keyboard.addEventListener('mousedown', (event) => {
 keyboard.addEventListener('mouseup', (event) => {
   eventHandler(event, 'mouseup');
 });
-
 
 addKeys(lang === 'eng' ? engKeys : ruKeys);
