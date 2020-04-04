@@ -52,24 +52,23 @@ const longKeys = [
   'Tab', 'Backspace', 'Enter', 'Caps Lock', 'Shift',
 ];
 const specialKeys = [
-  'Tab', 'Backspace', 'Enter', 'Caps Lock', 'Shift', 'AltLeft', 'AltRight', 'ControlLeft', 'Controlright', 'CapsLock', 'Delete', 'ShiftLeft', 'ShiftRight',
+  'Tab', 'Backspace', 'Enter', 'Caps Lock', 'Shift', 'AltLeft', 'AltRight', 'ControlLeft', 'ControlRight', 'CapsLock', 'Delete', 'MetaLeft', 'MetaRight', 'ShiftLeft', 'ShiftRight',
 ];
-
 
 let lang = localStorage.getItem('lang') ? localStorage.getItem('lang') : 'eng';
 let isShiftClicked = false;
 let isCapsLockClicked = false;
 
-const changeLangState = (language) => localStorage.setItem('lang', language);
-
 const body = document.querySelector('body');
 const inputField = document.createElement('textarea', 'input-field');
 inputField.classList.add('input-field');
-body.append(inputField);
-
 const keyboard = document.createElement('div');
 keyboard.classList.add('keyboard');
+body.append(inputField);
 body.append(keyboard);
+
+
+const changeLangState = (language) => localStorage.setItem('lang', language);
 
 const addKeys = (keys) => {
   keys.forEach((keyValue, index) => {
@@ -91,14 +90,12 @@ const changeKeys = (keyValues) => {
 };
 
 function eventHandler(event, type) {
-  inputField.focus();
-  event.preventDefault();
   const keys = document.querySelectorAll('.key');
   let eventCode;
   switch (type) {
     case 'mousedown':
     case 'mouseup':
-      eventCode = event.target.getAttribute('code');
+      if (event.target.classList.contains('key')) { eventCode = event.target.getAttribute('code'); } else return;
       break;
     case 'keydown':
     case 'keyup':
@@ -106,6 +103,9 @@ function eventHandler(event, type) {
       break;
     default:
   }
+  if (!keyCodes.includes(eventCode)) return;
+  inputField.focus();
+  event.preventDefault();
   if (type === 'keydown' || type === 'mousedown') {
     keys.forEach((elem) => {
       if (eventCode === elem.getAttribute('code')) {
@@ -210,7 +210,7 @@ keyboard.addEventListener('mousedown', (event) => {
 });
 
 
-document.addEventListener('mouseup', (event) => {
+keyboard.addEventListener('mouseup', (event) => {
   eventHandler(event, 'mouseup');
 });
 
