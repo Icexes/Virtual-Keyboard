@@ -15,15 +15,15 @@ body {
     justify-content: space-between;
     flex-wrap: wrap;
     margin: 30px auto;
-    max-width:850px;
+    max-width:880px;
     height:310px;
-    padding:5px;
+    padding:10px;
     border: 1px solid rgb(161, 82, 82);
-    border-radius: 2%;
+    border-radius: 10px;
     background-color: rgb(82, 90, 88);
 }
 
-.key {
+.keyboard__key {
     margin: 3px;
     padding:5px;
     background:rgb(24, 25, 26);
@@ -31,7 +31,7 @@ body {
     color:#fff;
     font-size:17px;
     font-weight:bold;
-    width:40px;
+    width:42px;
     height:40px;
     text-align:center;
     line-height: 40px;
@@ -42,19 +42,19 @@ body {
 }
 
 .key-special {
-    min-width: 80px;
+    min-width: 100px;
 }
 .space {
-    min-width:310px;
+    min-width:400px;
 }
 
-.key:hover {
+.keyboard__key:hover {
     background-color:rgb(109, 171, 196);
     cursor:pointer;
     
 }
-.key--active,
-.key:active {
+.keyboard__key--active,
+.keyboard__key:active {
     background-color: rgb(61, 184, 137);
     position:relative;
      top: 2px;
