@@ -110,12 +110,13 @@ function eventHandler(event, type) {
   if (type === 'keydown' || type === 'mousedown') {
     keys.forEach((elem) => {
       if (eventCode === elem.getAttribute('code')) {
-        elem.classList.add('key--active');
+        if (type === 'keydown') { elem.classList.add('key--active'); }
         if (!specialKeys.includes(eventCode)) {
           inputField.setRangeText(elem.textContent, inputField.selectionStart, inputField.selectionEnd, 'end');
         }
       }
     });
+
     switch (eventCode) {
       case 'CapsLock':
         if (event.repeat) return;

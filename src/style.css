@@ -36,6 +36,7 @@ body {
     text-align:center;
     line-height: 40px;
     user-select: none;
+    
 }
 
 .special-key {
@@ -46,9 +47,15 @@ body {
 }
 
 .key:hover {
-    background-color:rgb(38, 127, 143);
+    background-color:rgb(109, 171, 196);
     cursor:pointer;
+    
 }
-.key--active {
-    background-color:rgb(38, 127, 143);
+.key--active,
+.key:active {
+    background-color: rgb(61, 184, 137);
+    position:relative;
+     top: 2px;
+    left: 2px; 
+    transition:  0.3s;
 }
