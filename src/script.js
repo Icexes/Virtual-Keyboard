@@ -26,6 +26,14 @@ const engShiftKeys = [
   'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Win', 'Ctrl', '←', '↓', '→',
 ];
 
+const engShiftCapsKeys = [
+  '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace',
+  'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '{', '}', 'Del',
+  'Caps Lock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ':', '"', 'Enter',
+  'Shift', '|', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '<', '>', '?', '↑', 'Shift ',
+  'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Win', 'Ctrl', '←', '↓', '→',
+];
+
 const ruKeys = [
   'ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
   'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'Del',
@@ -45,6 +53,14 @@ const ruShiftKeys = [
   'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', 'Del',
   'Caps Lock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', 'Enter',
   'Shift', '/', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', '↑', 'Shift ',
+  'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Win', 'Ctrl', '←', '↓', '→',
+];
+
+const ruShiftCapsKeys = [
+  'ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace',
+  'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'Del',
+  'Caps Lock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter',
+  'Shift', '/', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', ',', '↑', 'Shift ',
   'Ctrl', 'Win', 'Alt', ' ', 'Alt', 'Win', 'Ctrl', '←', '↓', '→',
 ];
 
@@ -101,6 +117,7 @@ function eventHandler(event, type) {
       break;
     case 'keydown':
     case 'keyup':
+      if (!keyCodes.includes(event.code)) return;
       eventCode = event.code;
       break;
     default:
@@ -121,13 +138,14 @@ function eventHandler(event, type) {
           keyboard.querySelector("div[code='CapsLock']").classList.add('key--active');
 
           if (isShiftClicked) {
-            changeKeys(lang === 'eng' ? engShiftKeys : ruShiftKeys); // ??????????????????????????????????
+            changeKeys(lang === 'eng' ? engShiftCapsKeys : ruShiftCapsKeys); // ??????????????????????????????????
           } else {
             changeKeys(lang === 'eng' ? engCapsKeys : ruCapsKeys);
           }
         } else {
           keyboard.querySelector("div[code='CapsLock']").classList.remove('key--active');
-          changeKeys(lang === 'eng' ? engKeys : ruKeys);
+          if (isShiftClicked) changeKeys(lang === 'eng' ? engShiftKeys : ruShiftKeys);
+          else changeKeys(lang === 'eng' ? engKeys : ruKeys);
         }
         break;
       case 'ShiftLeft':
@@ -136,7 +154,7 @@ function eventHandler(event, type) {
         isShiftClicked = !isShiftClicked;
         if (isShiftClicked) {
           if (isCapsLockClicked) {
-            changeKeys(lang === 'eng' ? engKeys : ruKeys);
+            changeKeys(lang === 'eng' ? engShiftCapsKeys : ruShiftCapsKeys);
           } else {
             changeKeys(lang === 'eng' ? engShiftKeys : ruShiftKeys);
           }
