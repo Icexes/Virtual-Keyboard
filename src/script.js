@@ -90,6 +90,8 @@ const changeKeys = (keyValues) => {
 };
 
 function eventHandler(event, type) {
+  inputField.focus();
+  event.preventDefault();
   const keys = document.querySelectorAll('.key');
   let eventCode;
   switch (type) {
@@ -103,18 +105,13 @@ function eventHandler(event, type) {
       break;
     default:
   }
-  if (!keyCodes.includes(eventCode)) return;
-  inputField.focus();
-  event.preventDefault();
+
   if (type === 'keydown' || type === 'mousedown') {
-    keys.forEach((elem) => {
-      if (eventCode === elem.getAttribute('code')) {
-        if (type === 'keydown') { elem.classList.add('key--active'); }
-        if (!specialKeys.includes(eventCode)) {
-          inputField.setRangeText(elem.textContent, inputField.selectionStart, inputField.selectionEnd, 'end');
-        }
-      }
-    });
+    const currentKey = keyboard.querySelector(`div[code=${eventCode}]`);
+    if (type === 'keydown') { currentKey.classList.add('key--active'); }
+    if (!specialKeys.includes(eventCode)) {
+      inputField.setRangeText(currentKey.textContent, inputField.selectionStart, inputField.selectionEnd, 'end');
+    }
 
     switch (eventCode) {
       case 'CapsLock':
@@ -135,6 +132,7 @@ function eventHandler(event, type) {
         break;
       case 'ShiftLeft':
       case 'ShiftRight':
+        if (event.repeat) return;
         isShiftClicked = !isShiftClicked;
         if (isShiftClicked) {
           if (isCapsLockClicked) {
