@@ -68,6 +68,10 @@ const longKeys = [
   'Tab', 'Backspace', 'Enter', 'Caps Lock', 'Shift',
 ];
 const specialKeys = [
+  'Tab', 'Backspace', 'Enter', 'Caps Lock', 'Shift', 'Alt', 'Ctrl', 'Caps Lock', 'Del', 'Win', 'Shift', 'Shift ', '←', '↓', '↑', '→',
+];
+
+const specialKeysCodes = [
   'Tab', 'Backspace', 'Enter', 'Caps Lock', 'Shift', 'AltLeft', 'AltRight', 'ControlLeft', 'ControlRight', 'CapsLock', 'Delete', 'MetaLeft', 'MetaRight', 'ShiftLeft', 'ShiftRight',
 ];
 
@@ -91,7 +95,8 @@ const addKeys = (keys) => {
     const key = document.createElement('div');
     key.classList.add('key');
     key.setAttribute('code', keyCodes[index]);
-    if (longKeys.includes(keyValue)) key.classList.add('special-key');
+    if (!specialKeys.includes(keyValue)) key.classList.add('key-letter');
+    if (longKeys.includes(keyValue)) key.classList.add('key-special');
     if (keyCodes[index] === 'Space') key.classList.add('space');
     key.append(keyValue);
     keyboard.append(key);
@@ -126,7 +131,7 @@ function eventHandler(event, type) {
   if (type === 'keydown' || type === 'mousedown') {
     const currentKey = keyboard.querySelector(`div[code=${eventCode}]`);
     if (type === 'keydown') { currentKey.classList.add('key--active'); }
-    if (!specialKeys.includes(eventCode)) {
+    if (!specialKeysCodes.includes(eventCode)) {
       inputField.setRangeText(currentKey.textContent, inputField.selectionStart, inputField.selectionEnd, 'end');
     }
 
