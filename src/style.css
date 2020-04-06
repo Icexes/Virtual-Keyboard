@@ -5,9 +5,12 @@ body {
     min-width:700px;
     height:200px;
     display:block;
-    margin:0 auto;      
+    margin:15px auto;      
     resize:none;
-    border-radius: 2%;
+    border-radius: 10px;
+    padding:13px;
+    outline: none;
+    box-shadow: 0 10px 28px rgba(17, 194, 141, 0.25), 0 -2px 28px rgba(61, 184, 137, 0.2);
 }
 
 .keyboard {
@@ -16,9 +19,9 @@ body {
     flex-wrap: wrap;
     margin: 30px auto;
     max-width:880px;
+    min-width:880px;
     height:310px;
     padding:10px;
-    border: 1px solid rgb(161, 82, 82);
     border-radius: 10px;
     background-color: rgb(82, 90, 88);
 }
@@ -65,4 +68,5 @@ body {
 .system-description,
 .language-description {
     text-align: center;
+    user-select: none;
 }
