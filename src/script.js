@@ -77,8 +77,9 @@ const specialKeysCodes = [
 ];
 
 let lang = localStorage.getItem('lang') ? localStorage.getItem('lang') : 'eng';
-let isShiftClicked = false;
-let isCapsLockClicked = false;
+let isShiftPressed = false;
+let isShiftClickedByMouse = false;
+let isCapsLockPressed = false;
 
 const changeLangState = (language) => localStorage.setItem('lang', language);
 
@@ -125,14 +126,15 @@ const changeKeys = (keyValues) => {
 const eventHandler = (event, type) => {
   const keyboard = document.querySelector('.keyboard');
   const inputField = document.querySelector('.input-field');
-  inputField.focus();
   event.preventDefault();
-  const keys = document.querySelectorAll('.keyboard__key');
+  inputField.focus();
   let eventCode;
   switch (type) {
     case 'mousedown':
-    case 'mouseup':
       if (event.target.classList.contains('keyboard__key')) { eventCode = event.target.getAttribute('code'); } else return;
+      break;
+    case 'mouseup':
+      if (isShiftClickedByMouse) { eventCode = 'ShiftLeft'; } else if (event.target.classList.contains('keyboard__key')) { eventCode = event.target.getAttribute('code'); } else return;
       break;
     case 'keydown':
     case 'keyup':
@@ -148,31 +150,33 @@ const eventHandler = (event, type) => {
     if (!specialKeysCodes.includes(eventCode)) {
       inputField.setRangeText(currentKey.textContent, inputField.selectionStart, inputField.selectionEnd, 'end');
     }
-
+    if (type === 'mousedown' && (eventCode === 'ShiftLeft' || eventCode === 'ShiftRight')) {
+      isShiftClickedByMouse = true;
+    }
     switch (eventCode) {
       case 'CapsLock':
         if (event.repeat) return;
-        isCapsLockClicked = !isCapsLockClicked;
-        if (isCapsLockClicked) {
+        isCapsLockPressed = !isCapsLockPressed;
+        if (isCapsLockPressed) {
           keyboard.querySelector("div[code='CapsLock']").classList.add('keyboard__key--active');
 
-          if (isShiftClicked) {
+          if (isShiftPressed) {
             changeKeys(lang === 'eng' ? engShiftCapsKeys : ruShiftCapsKeys);
           } else {
             changeKeys(lang === 'eng' ? engCapsKeys : ruCapsKeys);
           }
         } else {
           keyboard.querySelector("div[code='CapsLock']").classList.remove('keyboard__key--active');
-          if (isShiftClicked) changeKeys(lang === 'eng' ? engShiftKeys : ruShiftKeys);
+          if (isShiftPressed) changeKeys(lang === 'eng' ? engShiftKeys : ruShiftKeys);
           else changeKeys(lang === 'eng' ? engKeys : ruKeys);
         }
         break;
       case 'ShiftLeft':
       case 'ShiftRight':
         if (event.repeat) return;
-        isShiftClicked = !isShiftClicked;
-        if (isShiftClicked) {
-          if (isCapsLockClicked) {
+        isShiftPressed = !isShiftPressed;
+        if (isShiftPressed) {
+          if (isCapsLockPressed) {
             changeKeys(lang === 'eng' ? engShiftCapsKeys : ruShiftCapsKeys);
           } else {
             changeKeys(lang === 'eng' ? engShiftKeys : ruShiftKeys);
@@ -198,31 +202,31 @@ const eventHandler = (event, type) => {
     if (event.ctrlKey && event.altKey) {
       lang = lang === 'eng' ? 'ru' : 'eng';
       changeLangState(lang);
-      if (isCapsLockClicked) {
-        if (isShiftClicked) {
+      if (isCapsLockPressed) {
+        if (isShiftPressed) {
           changeKeys(lang === 'eng' ? engShiftCapsKeys : ruShiftCapsKeys);
         } else {
           changeKeys(lang === 'eng' ? engCapsKeys : ruCapsKeys);
         }
-      } else if (isShiftClicked) {
+      } else if (isShiftPressed) {
         changeKeys(lang === 'eng' ? engShiftKeys : ruShiftKeys);
       } else {
         changeKeys(lang === 'eng' ? engKeys : ruKeys);
       }
     }
   } else if (type === 'keyup' || type === 'mouseup') {
-    keys.forEach((elem) => {
-      if (eventCode === elem.getAttribute('code') && eventCode !== 'CapsLock') {
-        elem.classList.remove('keyboard__key--active');
-      }
-    });
-
+    if (eventCode !== 'CapsLock') {
+      keyboard.querySelector(`div[code=${eventCode}]`).classList.remove('keyboard__key--active');
+    }
     switch (eventCode) {
       case 'ShiftLeft':
       case 'ShiftRight':
-        isShiftClicked = !isShiftClicked;
-        if (!isShiftClicked) {
-          if (isCapsLockClicked) {
+        if (type === 'mouseup') {
+          isShiftClickedByMouse = false;
+        }
+        isShiftPressed = !isShiftPressed;
+        if (!isShiftPressed) {
+          if (isCapsLockPressed) {
             changeKeys(lang === 'eng' ? engCapsKeys : ruCapsKeys);
           } else {
             changeKeys(lang === 'eng' ? engKeys : ruKeys);
@@ -242,18 +246,15 @@ const addListeners = () => {
     eventHandler(event, 'keydown');
   });
 
-
   document.addEventListener('keyup', (event) => {
     eventHandler(event, 'keyup');
   });
-
 
   keyboard.addEventListener('mousedown', (event) => {
     eventHandler(event, 'mousedown');
   });
 
-
-  keyboard.addEventListener('mouseup', (event) => {
+  document.addEventListener('mouseup', (event) => {
     eventHandler(event, 'mouseup');
   });
 };
