@@ -193,7 +193,7 @@ const eventHandler = (event, type) => {
         inputField.setRangeText('\n', inputField.selectionStart, inputField.selectionEnd, 'end');
         break;
       case 'Tab':
-        inputField.setRangeText('  ', inputField.selectionStart, inputField.selectionEnd, 'end');
+        inputField.setRangeText('    ', inputField.selectionStart, inputField.selectionEnd, 'end');
         break;
       default:
     }
