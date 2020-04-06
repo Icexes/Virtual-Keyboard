@@ -127,7 +127,6 @@ const eventHandler = (event, type) => {
   const keyboard = document.querySelector('.keyboard');
   const inputField = document.querySelector('.input-field');
   event.preventDefault();
-  inputField.focus();
   let eventCode;
   switch (type) {
     case 'mousedown':
@@ -143,7 +142,7 @@ const eventHandler = (event, type) => {
       break;
     default:
   }
-
+  inputField.focus();
   if (type === 'keydown' || type === 'mousedown') {
     const currentKey = keyboard.querySelector(`div[code=${eventCode}]`);
     if (type === 'keydown') { currentKey.classList.add('keyboard__key--active'); }
