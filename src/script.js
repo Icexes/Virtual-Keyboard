@@ -198,7 +198,7 @@ const eventHandler = (event, type) => {
       default:
     }
 
-    if (event.ctrlKey && event.altKey) {
+    if ((event.ctrlKey && event.altKey) || (event.ctrlKey && currentKey.textContent === 'Alt') || (event.altKey && currentKey.textContent === 'Ctrl')) {
       lang = lang === 'eng' ? 'ru' : 'eng';
       changeLangState(lang);
       if (isCapsLockPressed) {
